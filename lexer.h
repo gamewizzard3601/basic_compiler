@@ -4,8 +4,54 @@
 // will fix func declarations as I go
 #include <string>
 
+class Token {
+  // token class, contains original text and type
+
+public:
+  enum class TokenTypes {
+    EOF_1 = -1,
+    NEWLINE = 0,
+    NUMBER = 1,
+    IDENT = 2,
+    STRING = 3,
+    // keywords
+    LABEL = 101,
+    GOTO = 102,
+    PRINT = 103,
+    INPUT = 104,
+    LET = 105,
+    IF = 106,
+    THEN = 107,
+    ENDIF = 108,
+    WHILE = 109,
+    REPEAT = 110,
+    ENDWHILE = 111,
+    // operators
+    EQ = 201,
+    PLUS = 202,
+    MINUS = 203,
+    ASTERISK = 204,
+    SLASH = 205,
+    EQEQ = 206,
+    NOTEQ = 207,
+    LT = 208,
+    LTEQ = 209,
+    GT = 210,
+    GTEQ = 211,
+  };
+
+  std::string tokenText;
+  TokenTypes tokenType;
+
+  // obj management
+  Token();                          // constructor
+  ~Token();                         // destructor
+  Token(const Token &t);            // copy constructor
+  Token &operator=(const Token &t); // copy assignment operator
+};
+
 class Lexer {
-  // declaring private vars
+  // lexer object class
 
 public:
   std::string source;
@@ -25,16 +71,16 @@ public:
   char peek();
 
   // invalid token found, print error message and exit
-  void abort(std::string &message);
+  void abort(const std::string &message);
 
-  // skip withespace except newlines, which we will use to indicate the [token]?
+  // skip whitespace except newlines, which we will use to indicate the [token]?
   void skipWhitespace();
 
   // skip comments in the code
   void skipComment();
 
   // return the next token
-  void getToken();
+  Token getToken();
 };
 
 #endif
