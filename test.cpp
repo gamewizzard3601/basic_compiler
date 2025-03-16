@@ -10,9 +10,5 @@ int main() {
   // testing token
   Token mytoken = lexer.getToken();
   cout << "token source: " << mytoken.tokenText << endl;
-  if (mytoken.tokenType == Token::TokenTypes::MINUS) {
-    cout << "token type MINUS" << endl;
-  } else {
-    cout << "token type failure" << endl;
-  }
+  cout << "token type: " << mytoken.tokenType << endl;
 }

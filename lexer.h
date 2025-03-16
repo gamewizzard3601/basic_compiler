@@ -2,6 +2,7 @@
 #define LEXER
 
 // will fix func declarations as I go
+#include <ostream>
 #include <string>
 
 class Token {
@@ -48,6 +49,7 @@ public:
   ~Token();                         // destructor
   Token(const Token &t);            // copy constructor
   Token &operator=(const Token &t); // copy assignment operator
+  friend std::ostream &operator<<(std::ostream &os, const Token::TokenTypes &t);
 };
 
 class Lexer {
@@ -59,10 +61,10 @@ public:
   int curPos;
 
   // obj management
-  Lexer(std::string &new_source);   // constructor
-  ~Lexer();                         // destructor
-  Lexer(const Lexer &l);            // copy constructor
-  Lexer &operator=(const Lexer &l); // copy assignment operator
+  Lexer(const std::string &new_source); // constructor
+  ~Lexer();                             // destructor
+  Lexer(const Lexer &l);                // copy constructor
+  Lexer &operator=(const Lexer &l);     // copy assignment operator
 
   // process the next char
   void nextChar();
@@ -73,11 +75,15 @@ public:
   // invalid token found, print error message and exit
   void abort(const std::string &message);
 
-  // skip whitespace except newlines, which we will use to indicate the [token]?
+  // skip whitespace except newlines, which we will use to indicate the
+  // [token]?
   void skipWhitespace();
 
   // skip comments in the code
   void skipComment();
+
+  // checks if given string is number
+  bool isNum(const std::string &s);
 
   // return the next token
   Token getToken();
